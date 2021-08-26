@@ -1,0 +1,22 @@
+{% extends "layout.twig" %}
+
+{% block title "Dedipass" %}
+
+{% block scripts %}
+    <script src="//api.dedipass.com/v1/pay.js"></script>
+{% endblock %}
+{% block body %}
+    <section class="forms">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-xl-12 col-sm-12">
+                    {% if public is not empty %}
+                        <div data-dedipass="{{ public }}" data-dedipass-custom="{{ current_user().id }}"></div>
+                    {% else %}
+                        <p>Please config public and private key in settings for display terminal</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
