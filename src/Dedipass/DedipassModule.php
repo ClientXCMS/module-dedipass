@@ -18,7 +18,7 @@ class DedipassModule extends \ClientX\Module
 
     public function __construct(Router $router, RendererInterface $renderer, ThemeInterface $theme, ContainerInterface $container)
     {
-        $renderer->addPath('Dedipass', $theme->getViewsPath() . '/dedipass');
+        $renderer->addPath('Dedipass', $theme->getViewsPath() . '/Dedipass');
         $renderer->addPath('Dedipass_admin', __DIR__ . '/Views');
         $router->get($container->get('clientarea.prefix') . '/dedipass', DedipassIndexAction::class, 'dedipass');
         $router->crud($container->get('admin.prefix') . '/dedipass', DedipassAdminAction::class, 'dedipass.admin');
