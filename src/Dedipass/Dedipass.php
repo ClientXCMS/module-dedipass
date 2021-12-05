@@ -1,89 +1,28 @@
 <?php
 
-
 namespace App\Dedipass;
 
-
-use App\Shop\Entity\Recurring;
-use DateTime;
-
-class Dedipass implements \App\Shop\Entity\Orderable
+class Dedipass
 {
+    public int $id;
+    public string $code;
+    public int $userId;
+    public string $status;
+    public string $identifier;
+    public \DateTime $createdAt;
 
-    private bool $isTest;
-    private int $payout;
-
-    public function __construct(bool $isTest, int $payout)
+    /**
+     * @throws \Exception
+     */
+    public function setCreatedAt(string $createdAt): void
     {
-        $this->isTest = $isTest;
-        $this->payout = $payout;
+        $this->createdAt = new \DateTime($createdAt);
     }
 
-    public function getId(): ?int
-    {
-        return 0;
+    public function statusBadge():string{
+        $status = strtoupper($this->status);
+        $color = $this->status == 'success' ? 'success' : 'danger';
+        return "<span class='badge badge-$color'>$status</span>";
     }
 
-    public function getName(): ?string
-    {
-        if ($this->isTest) {
-            return "Dedipass (testmode)";
-        }
-        return "Dedipass";
-    }
-
-    public function getDescription(): ?string
-    {
-        return null;
-    }
-
-    public function getPrice(string $recurring = Recurring::MONTHLY, bool $setup = false, array $options = [])
-    {
-        return $this->payout;
-    }
-
-    public function inStock(): bool
-    {
-        return true;
-    }
-
-    public function getRecurring(): Recurring
-    {
-        return Recurring::onetime();
-    }
-
-    public function getPaymentType(): string
-    {
-        return "onetime";
-    }
-
-    public function hasAutoterminate(): bool
-    {
-        return true;
-    }
-
-    public function canRecurring(): bool
-    {
-        return false;
-    }
-
-    public function getAutoTerminateAt(): ?DateTime
-    {
-        return null;
-    }
-
-    public function getExpireAt(): ?DateTime
-    {
-        return null;
-    }
-
-    public function getTable(): string
-    {
-        return "";
-    }
-
-    public function getType(): string
-    {
-        return "dedipass";
-    }
 }

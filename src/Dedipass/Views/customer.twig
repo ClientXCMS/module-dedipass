@@ -1,0 +1,47 @@
+<div class="col-md-12 col-sm-12">
+    <div class="card" {% if items | length > 5 %}style="
+    height:350px;
+    overflow:scroll;
+    overflow-x:hidden;
+"{% endif %}>
+        <div class="card-body">
+            <h4><i class="fa fa-mobile-alt mr-2"></i> Dedipass
+            </h4>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th>{{ trans("amount")}}</th>
+                    <th>Payout</th>
+                    <th>Code</th>
+                    <th>Identifier</th>
+                    <th>{{ trans("date")}}</th>
+                    <th>{{ trans("state2")}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if items is not empty %}
+                    {% for item in items %}
+                        <tr>
+                            <td>#{{ item.id }}</td>
+
+                            <td>{{ item.amount }}</td>
+                            <td>{{ item.payout }}</td>
+                            <td>{{ item.code }}</td>
+                            <td>{{ item.identifier }}</td>
+                            <td>{{ item.createdAt.format('d/m/y H:i:s') }}</td>
+                            <td>{{ item.statusBadge | raw }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="8">{{ trans("no_record") }}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

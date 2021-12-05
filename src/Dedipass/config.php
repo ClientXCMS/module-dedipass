@@ -2,6 +2,7 @@
 
 use App\Dedipass\Actions\DedipassApiAction;
 use App\Dedipass\Actions\DedipassIndexAction;
+use App\Dedipass\DedipassCustomerItem;
 use App\Dedipass\DedipassPaymentType;
 use App\Dedipass\DedipassSettings;
 use ClientX\Navigation\DefaultMainItem;
@@ -13,10 +14,11 @@ use function DI\get;
 return [
     'csrf.except' => add('dedipass.api'),
     'admin.settings' => add(get(DedipassSettings::class)),
+    'admin.customer.items' => add(get(DedipassCustomerItem::class)),
     'payments.type' => add(get(DedipassPaymentType::class)),
-    'navigation.main.items' => add([new DefaultMainItem([DefaultMainItem::makeItem('Dedipass', 'dedipass', 'fa fa-mobile')], 80)]),
+    'navigation.main.items' => add([new DefaultMainItem([DefaultMainItem::makeItem('Dedipass', 'dedipass', 'fa fa-mobile', false, true)], 80)]),
     DedipassIndexAction::class => autowire()->constructorParameter('dedipassPublic', setting('dedipass_public', '')),
     DedipassApiAction::class => autowire()
         ->constructorParameter('publicKey', setting('dedipass_public', ''))
-        ->constructorParameter('privateKey', setting('dedipass_private', '')),
+        ->constructorParameter('privateKey', setting('dedipass_secret', '')),
 ];

@@ -1,0 +1,73 @@
+{% extends '@admin/layout.twig' %}
+{% block title trans('shopadmin.transactiontemplate.title', {'%type%': type}) %}
+{% block pagetitle trans('shopadmin.transactiontemplate.title', {'%type%': type}) %}
+{% block pagesubtitle trans('shopadmin.transactiontemplate.subtitle', {'%type%': type}) %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex bd-highlight mb-3">
+                <div class="p-2 bd-highlight">
+                    <form method="GET" class="form-inline mb-3 mr-3">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="{{ trans("search") }}" name="s" value="{{ query }}">
+                        </div>
+                        <button type="submit" class="btn btn-info" title="{{ trans("search") }}">
+                            <i class="fas fa-search"></i>
+                            </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th>{{ trans("amount")}}</th>
+                        <th>Payout</th>
+                        <th>Code</th>
+                        <th>Identifier</th>
+                        <th>{{ trans("user")}}</th>
+                        <th>{{ trans("date")}}</th>
+                        <th>{{ trans("state2")}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if items is not empty %}
+                        {% for item in items %}
+                            <tr>
+                                <td>#{{ item.id }}</td>
+
+                                <td>{{ item.amount }}</td>
+                                <td>{{ item.payout }}</td>
+                                <td>{{ item.code }}</td>
+                                <td>{{ item.identifier }}</td>
+
+                                <td>
+                                    <a href="{{ path('account.admin.edit', {id: item.userId}) }}">{{ item.username }}</a>
+                                </td>
+
+                                <td>{{ item.createdAt.format('d/m/y H:i:s') }}</td>
+                                <td>{{ item.statusBadge | raw }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="8">{{ trans("no_record") }}</td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                {% if query is defined %}
+                    {{ paginate(items, routePrefix ~ '.index', {'query':query}) }}
+                {% endif %}
+                {% if query is not defined %}
+                    {{ paginate(items, routePrefix ~ '.index') }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

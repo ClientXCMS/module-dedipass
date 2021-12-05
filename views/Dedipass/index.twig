@@ -9,6 +9,55 @@
     <section class="forms">
         <div class="container-fluid">
             <div class="row">
+                <div class="card card-body">
+                    <h4>{{ trans("your_transactions") }}</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th>{{ trans("amount")}}</th>
+                            <th>Payout</th>
+                            <th>Code</th>
+                            <th>Identifier</th>
+                            <th>{{ trans("date")}}</th>
+                            <th>{{ trans("state2")}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if items is not empty %}
+                            {% for item in items %}
+                                <tr>
+                                    <td>#{{ item.id }}</td>
+
+                                    <td>{{ item.amount }}</td>
+                                    <td>{{ item.payout }}</td>
+                                    <td>{{ item.code }}</td>
+                                    <td>{{ item.identifier }}</td>
+
+                                    <td>{{ item.createdAt.format('d/m/y H:i:s') }}</td>
+                                    <td>{{ item.statusBadge | raw }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6">{{ trans("no_record") }}</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    {% if query is defined %}
+                        {{ paginate(items, routePrefix ~ '.index', {'query':query}) }}
+                    {% endif %}
+                    {% if query is not defined %}
+                        {{ paginate(items, routePrefix ~ '.index') }}
+                    {% endif %}
+                </div>
+
+                </div>
+
                 <div class="col-md-12 col-xl-12 col-sm-12">
                     {% if public is not empty %}
                         <div data-dedipass="{{ public }}" data-dedipass-custom="{{ current_user().id }}"></div>

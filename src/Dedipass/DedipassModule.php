@@ -15,10 +15,11 @@ class DedipassModule extends \ClientX\Module
 {
 
     const DEFINITIONS = __DIR__ . '/config.php';
+    const MIGRATIONS = __DIR__ . '/db/migrations';
 
     public function __construct(Router $router, RendererInterface $renderer, ThemeInterface $theme, ContainerInterface $container)
     {
-        $renderer->addPath('Dedipass', $theme->getViewsPath() . '/dedipass');
+        $renderer->addPath('Dedipass', $theme->getViewsPath() . '/Dedipass');
         $renderer->addPath('Dedipass_admin', __DIR__ . '/Views');
         $router->get($container->get('clientarea.prefix') . '/dedipass', DedipassIndexAction::class, 'dedipass');
         $router->crud($container->get('admin.prefix') . '/dedipass', DedipassAdminAction::class, 'dedipass.admin');
