@@ -32,7 +32,8 @@ class DedipassCustomerItem implements \ClientX\Navigation\NavigationItemInterfac
         return $renderer->render("@Dedipass_admin/customer", ['items' => $items]);
     }
 
-    public function setUser(User $user){
+    public function setUser(User $user)
+    {
         $this->user = $user;
     }
 }

@@ -16,6 +16,7 @@ return [
     'admin.settings' => add(get(DedipassSettings::class)),
     'admin.customer.items' => add(get(DedipassCustomerItem::class)),
     'payments.type' => add(get(DedipassPaymentType::class)),
+    'payment.boards' => add(get(\App\Dedipass\DedipassPaymentBoard::class)),
     'navigation.main.items' => add([new DefaultMainItem([DefaultMainItem::makeItem('Dedipass', 'dedipass', 'fa fa-mobile', false, true)], 80)]),
     DedipassIndexAction::class => autowire()->constructorParameter('dedipassPublic', setting('dedipass_public', '')),
     DedipassApiAction::class => autowire()

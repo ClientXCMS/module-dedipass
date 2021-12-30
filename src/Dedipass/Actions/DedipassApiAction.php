@@ -69,7 +69,7 @@ class DedipassApiAction extends Action
             return $this->json(['status' => 'error', 'message' => 'Invalid private key'], 500);
         }
         $this->makeTransaction($params);
-        return $this->json(['success' => true, 'params' => $params]);
+        return $this->json(['success' => true, 'params' => $params, 'message' => 'Success']);
     }
 
     private function existCode(string $code): bool
@@ -102,11 +102,12 @@ class DedipassApiAction extends Action
             $user->addFund($money);
             $this->userTable->updateWallet($user);
         }
+
         $this->table->insert([
             'user_id' => $params['custom'],
             'code' => $params['code'],
             'payout' => $params['payout'],
-            'amount' => $params['money'],
+            'amount' => $params['virtual_currency'],
             'status' => $params['status'],
             'identifier' => $params['identifier']
         ]);
