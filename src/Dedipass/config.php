@@ -12,7 +12,7 @@ use function DI\autowire;
 use function DI\get;
 
 return [
-    'csrf.except' => add('dedipass.api'),
+    'csrf.except' => add(['dedipass.api']),
     'admin.settings' => add(get(DedipassSettings::class)),
     'admin.customer.items' => add(get(DedipassCustomerItem::class)),
     'payments.type' => add(get(DedipassPaymentType::class)),
