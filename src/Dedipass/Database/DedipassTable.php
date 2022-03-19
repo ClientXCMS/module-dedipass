@@ -9,6 +9,7 @@ class DedipassTable extends \ClientX\Database\Table
 {
     protected $table = "dedipass_log";
     protected $entity = Dedipass::class;
+    protected $element = "code";
 
 
     public function makeQueryForAdmin(?array $search = null, $order = 'desc'): Query
