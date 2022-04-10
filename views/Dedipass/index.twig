@@ -1,18 +1,9 @@
-{% extends "layout.twig" %}
-
-{% block title "Dedipass" %}
-
-{% block scripts %}
-    <script src="//api.dedipass.com/v1/pay.js"></script>
-{% endblock %}
-{% block body %}
-    <section class="forms">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="card card-body">
-                    <h4>{{ trans("your_transactions") }}</h4>
+<div class="card card-body">
+    <div class="row">
+        <div class="col-md-12 col-xl-12 col-sm-12">
+            <h3 class="mt-4 pb-2 text-primary fw-bold">{{ trans("your_transactions") }} Dedipass</h3>
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-bordered">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -30,8 +21,8 @@
                                 <tr>
                                     <td>#{{ item.id }}</td>
 
-                                    <td>{{ item.amount }}</td>
-                                    <td>{{ item.payout }}</td>
+                                    <td>{{ item.amount | formatted_price() }}</td>
+                                    <td>{{ item.payout | formatted_price(true, 'none') | trans }}</td>
                                     <td>{{ item.code }}</td>
                                     <td>{{ item.identifier }}</td>
 
@@ -41,31 +32,21 @@
                             {% endfor %}
                         {% else %}
                             <tr>
-                                <td colspan="6">{{ trans("no_record") }}</td>
+                                <td colspan="7">{{ trans("no_record") }}</td>
                             </tr>
                         {% endif %}
                         </tbody>
                     </table>
                 </div>
-                <div class="d-flex justify-content-center mt-4">
-                    {% if query is defined %}
-                        {{ paginate(items, routePrefix ~ '.index', {'query':query}) }}
-                    {% endif %}
-                    {% if query is not defined %}
-                        {{ paginate(items, routePrefix ~ '.index') }}
-                    {% endif %}
-                </div>
-
-                </div>
-
-                <div class="col-md-12 col-xl-12 col-sm-12">
-                    {% if public is not empty %}
+        </div>
+        <div class="col-md-12 col-xl-12 col-sm-12">
+            <div class="card card-body">
+        {% if public is not empty %}
                         <div data-dedipass="{{ public }}" data-dedipass-custom="{{ current_user().id }}"></div>
                     {% else %}
                         <p>Please config public and private key in settings for display terminal</p>
                     {% endif %}
                 </div>
             </div>
-        </div>
-    </section>
-{% endblock %}
+</div>
+</div>
